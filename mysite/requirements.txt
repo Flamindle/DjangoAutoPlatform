@@ -1,0 +1,12 @@
+Django==4.2.17
+djangorestframework
+django-redis==5.4.0
+pymysql==1.1.2
+gunicorn
+requests
+beautifulsoup4
+lxml
+pandas
+numpy
+python-dateutil
+pytz

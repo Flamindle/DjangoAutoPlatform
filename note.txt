@@ -38,3 +38,12 @@ python3.9 manage.py makemigrations test_plt
 python3.9 manage.py migrate
 
 python3.9  manage.py runserver 8081
+
+
+
+==========================docker================================
+# 构建镜像
+docker build -t my-django-app .
+
+# 运行容器
+docker run -d -p 8000:8000 my-django-app

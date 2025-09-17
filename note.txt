@@ -1,4 +1,4 @@
-cd /Users/flamindle/Desktop/MacBookAirM2/PyCharm/2_Django/B_SQLite3/mysite
+cd /Users/flamindle/Desktop/MacBookAirM2/PyCharm/2_Django/B_SQLite3/DjangoAutoPlatform/mysite
 
 cd /Users/flamindle/Desktop/MacBookAirM2/PyCharm/2_Django/B_SQLite3
 django-admin startproject mysite
@@ -35,12 +35,12 @@ TIME_ZONE = 'Asia/Shanghai'
 
 
 python3.9 manage.py makemigrations test_plt
-python3.9 manage.py migrate
+python3.9 manage.py migrate test_plt
 
 python3.9  manage.py runserver 8081
 
-
-
+python3.9 manage.py sqlmigrate test_plt 0002_alter_project_options_project_create_time_and_more
+python3.9 manage.py migrate test_plt
 ==========================docker================================
 # ¹¹½¨¾µÏñ
 docker build -t my-django-app .

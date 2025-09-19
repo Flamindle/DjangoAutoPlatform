@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-# Create your models here.
 #定义项目的model
+#**************************测试项目数据库字段**************************
 class Project(models.Model):
     PROJECT_TYPE=(
         (1,'Web'),
@@ -42,10 +42,11 @@ class Project(models.Model):
 
     #项目描述：内部类
     class Meta:
-        #给人看的
+        #给前端看的
         verbose_name = '自动化测试'
         verbose_name_plural = "测试项目"
 
+#**************************项目成员数据库字段**************************
 class ProjectMember(models.Model):
     '''
     项目成员:项目与用户的关系
@@ -87,3 +88,26 @@ class ProjectMember(models.Model):
     class Meta:
         verbose_name = "项目成员"
         verbose_name_plural = verbose_name
+
+#**************************部署环境数据库字段**************************
+class DeployEnv(models.Model):
+    '''
+    部署环境
+    '''
+    id = models.AutoField(primary_key=True, verbose_name="主键")
+    project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="测试项目")
+    name= models.CharField(max_length=100, verbose_name="环境名称")
+    hostname=models.CharField(max_length=100, verbose_name="主机名",help_text="IP地址或域名")
+    port=models.IntegerField(default=22, verbose_name="端口")
+    status=models.BooleanField(default=True, verbose_name="状态")
+    memo=models.TextField(max_length=200, default=" ", verbose_name="备注", null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "部署环境"
+        verbose_name_plural = verbose_name
+
+#**************************数据库字段**************************
+

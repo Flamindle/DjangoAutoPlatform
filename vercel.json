@@ -1,15 +1,18 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "requirements.txt",
+      "src": "mysite/wsgi.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "mysite/staticfiles/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "mysite/mysite/wsgi.py"
+      "dest": "mysite/wsgi.py"
     }
   ]
 }

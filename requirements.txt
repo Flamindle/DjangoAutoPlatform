@@ -10,3 +10,4 @@ pandas
 numpy
 python-dateutil
 pytz
+whitenoise

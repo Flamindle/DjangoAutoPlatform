@@ -45,3 +45,45 @@ class Project(models.Model):
         #给人看的
         verbose_name = '自动化测试'
         verbose_name_plural = "测试项目"
+
+class ProjectMember(models.Model):
+    '''
+    项目成员:项目与用户的关系
+    '''
+    MEMBER_ROLE=(
+        (1,'测试工程师'),
+        (2,'测试组长'),
+        (3,'测试经理'),
+        (4,'开发工程师'),
+        (5,'运维工程师'),
+        (6,'项目经理'),
+    )
+
+    id=models.AutoField(primary_key=True, verbose_name="主键")
+    project=models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="测试项目")
+    # user=models.ForeignKey(User, on_delete=models.SET_NULL,null=True, verbose_name="用户")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="auto_members",  # 👈 改成唯一名字
+        verbose_name="用户"
+    )
+    join_date=models.DateField(verbose_name="加入日期")
+    role=models.IntegerField(choices=MEMBER_ROLE, verbose_name="角色")
+    status=models.BooleanField(default=True, verbose_name="状态")
+    quit_date=models.DateField(verbose_name="退出日期",null=True, blank=True)
+    memo=models.TextField(max_length=200, default=" ", verbose_name="备注", null=True, blank=True)
+
+    def __str__(self):
+        if not self.user:
+            return "-"
+        else:
+            first_name=self.user.first_name if self.user.first_name else "-"
+            username=self.user.username
+
+            return f"{first_name}({username})"
+
+    class Meta:
+        verbose_name = "项目成员"
+        verbose_name_plural = verbose_name

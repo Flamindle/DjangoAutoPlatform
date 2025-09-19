@@ -3,7 +3,7 @@ from django.contrib import admin
 from django import forms
 from django.contrib.admin import ModelAdmin
 
-from .models import Project, ProjectMember
+from .models import Project
 
 
 # 自定义表单，调整输入框大小
@@ -46,14 +46,11 @@ class ProjectAdmin(admin.ModelAdmin):
 # 传统注册方法
 admin.site.register(Project, ProjectAdmin)
 
-# # 设置后台标题
-# admin.site.site_header = "缺陷管理系统"
-# admin.site.site_title = "Jacky自动化平台自研系统"
-
-class ProjectMemberAdmin(ModelAdmin):
-    list_display = ('id', 'project', 'user','join_date','status')
-    list_display_links = ('user', 'project')
-    search_fields = ('user__first_name', 'user__username')
-    list_filter = ('project','join_date','status')
-
-admin.site.register(ProjectMember, ProjectMemberAdmin)
+#
+# class ProjectMemberAdmin(ModelAdmin):
+#     list_display = ('id', 'project', 'user','join_date','status')
+#     list_display_links = ('user', 'project')
+#     search_fields = ('user__first_name', 'user__username')
+#     list_filter = ('project','join_date','status')
+#
+# admin.site.register(ProjectMember, ProjectMemberAdmin)

@@ -91,5 +91,5 @@ class Project(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = "测试平台(实验版)"
+        verbose_name = "测试平台（Debug）"
         verbose_name_plural = verbose_name

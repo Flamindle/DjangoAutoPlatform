@@ -1,12 +1,11 @@
+=========================1. 系统级别设置=========================
 cd /Users/flamindle/Desktop/MacBookAirM2/PyCharm/2_Django/B_SQLite3/DjangoAutoPlatform/mysite
-
 cd /Users/flamindle/Desktop/MacBookAirM2/PyCharm/2_Django/B_SQLite3
 django-admin startproject mysite
 cd mysite
 python3.9  manage.py migrate
 python3.9 manage.py createsuperuser
 python3.9 manage.py startapp test_plt
-
 
 INSTALLED_APPS = [
     'test_plt.apps.TestPltConfig',
@@ -21,6 +20,14 @@ INSTALLED_APPS = [
 #encoding: utf-8
 from django.db import models
 
+#设置语言
+LANGUAGE_CODE = 'zh-hans'
+#set时区
+TIME_ZONE = 'Asia/Shanghai'
+
+python3.9  manage.py runserver 8081
+
+=========================2. 应用级别设置=========================
 #定义项目的model
 class Project(models.Model):
     #自增字段：主键id
@@ -28,19 +35,14 @@ class Project(models.Model):
     #项目名称
     name = models.CharField(max_length=200)
 
-#设置语言
-LANGUAGE_CODE = 'zh-hans'
-#set时区
-TIME_ZONE = 'Asia/Shanghai'
+
 
 
 python3.9 manage.py makemigrations test_plt
 python3.9 manage.py migrate test_plt
-
-python3.9  manage.py runserver 8081
-
 python3.9 manage.py sqlmigrate test_plt 0002_alter_project_options_project_create_time_and_more
-python3.9 manage.py migrate test_plt
+
+
 ==========================docker================================
 # 构建镜像
 docker build -t my-django-app .

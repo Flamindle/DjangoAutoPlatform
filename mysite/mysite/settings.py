@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'test_plt.apps.TestPltConfig',
+
+    'issue_manage_plt',
+    'auto_test_plt',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

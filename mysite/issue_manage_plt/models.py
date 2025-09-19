@@ -3,8 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from ctypes.wintypes import PCHAR
-
 
 class Project(models.Model):
     TESTING_TYPE = (
@@ -65,7 +63,7 @@ class Project(models.Model):
     # 15. 提交人（下拉框 → 关联 User）
     reporter = models.ForeignKey(
         User,
-        related_name="reported_projects",
+        related_name="issue_reported_projects",  # 修改
         on_delete=models.SET_NULL,
         null=True,
         verbose_name="提交人"
@@ -74,7 +72,7 @@ class Project(models.Model):
     # 16. 评审人（下拉框 → 关联 User）
     reviewer = models.ForeignKey(
         User,
-        related_name="reviewed_projects",
+        related_name="issue_reviewed_projects",  # 修改
         on_delete=models.SET_NULL,
         null=True,
         verbose_name="评审人"
@@ -86,10 +84,10 @@ class Project(models.Model):
     # 18. 测试类型
     test_type = models.IntegerField(choices=TESTING_TYPE, default=1, verbose_name="测试类型")
 
-
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = "测试平台(实验版)"
+        db_table = "issue_manage_plt_project"
+        verbose_name = "缺陷管理平台"
         verbose_name_plural = verbose_name

@@ -1,16 +1,11 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "mysite/mysite/wsgi.py",
+      "src": "manage.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "mysite/staticfiles/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "mysite/mysite/wsgi.py"

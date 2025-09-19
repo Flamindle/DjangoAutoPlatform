@@ -60,7 +60,7 @@ class Project(models.Model):
     # 14. 时间戳（存字符串，但建议用 IntegerField 存 Unix 时间戳）
     timestamp = models.TextField(max_length=100, default=" ", verbose_name="时间戳")
 
-    # 15. 提交人（下拉框 → 关联 User）
+    # 15. 提交人（下拉框 → 关联 User），对应数据库字段：reporter_id
     reporter = models.ForeignKey(
         User,
         related_name="issue_reported_projects",  # 修改
@@ -69,7 +69,7 @@ class Project(models.Model):
         verbose_name="提交人"
     )
 
-    # 16. 评审人（下拉框 → 关联 User）
+    # 16. 评审人（下拉框 → 关联 User），对应数据库字段：reviewer_id
     reviewer = models.ForeignKey(
         User,
         related_name="issue_reviewed_projects",  # 修改
@@ -90,4 +90,40 @@ class Project(models.Model):
     class Meta:
         db_table = "issue_manage_plt_project"
         verbose_name = "缺陷管理平台"
+        verbose_name_plural = verbose_name
+
+
+class ProjectMember(models.Model):
+    '''
+    项目成员:项目与用户的关系
+    '''
+    MEMBER_ROLE=(
+        (1,'测试工程师'),
+        (2,'测试组长'),
+        (3,'测试经理'),
+        (4,'开发工程师'),
+        (5,'运维工程师'),
+        (6,'项目经理'),
+    )
+
+    id=models.AutoField(primary_key=True, verbose_name="主键")
+    project=models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="测试项目")
+    user=models.ForeignKey(User, on_delete=models.SET_NULL,null=True, verbose_name="用户")
+    join_date=models.DateField(verbose_name="加入日期")
+    role=models.IntegerField(choices=MEMBER_ROLE, verbose_name="角色")
+    status=models.BooleanField(default=True, verbose_name="状态")
+    quit_date=models.DateField(verbose_name="退出日期",null=True, blank=True)
+    memo=models.TextField(max_length=200, default=" ", verbose_name="备注", null=True, blank=True)
+
+    def __str__(self):
+        if not self.user:
+            return "-"
+        else:
+            first_name=self.user.first_name if self.user.first_name else "-"
+            username=self.user.username
+
+            return f"{first_name}({username})"
+
+    class Meta:
+        verbose_name = "项目成员"
         verbose_name_plural = verbose_name

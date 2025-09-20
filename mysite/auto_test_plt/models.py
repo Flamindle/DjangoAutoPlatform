@@ -9,8 +9,8 @@ class Project(models.Model):
     PROJECT_TYPE=(
         (1,'Web'),
         (2,'App'),
-        (3,'PC'),
-        (4,'接口'),
+        (3,'API'),
+        (4,'PC'),
         (5,'功能'),
         (6,'性能'),
         (7,'安全'),
@@ -31,7 +31,9 @@ class Project(models.Model):
     #项目状态
     status=models.BooleanField(default=True,verbose_name='项目状态')
     #创建人
-    create_user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,verbose_name='创建人')
+    create_user=models.ForeignKey(User,on_delete=models.SET_NULL,
+                                  db_column='create_user',
+                                  null=True,verbose_name='创建人')
     #创建时间
     create_time=models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
     #最后更新时间
@@ -95,7 +97,7 @@ class DeployEnv(models.Model):
     部署环境
     '''
     id = models.AutoField(primary_key=True, verbose_name="主键")
-    project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="测试项目")
+    project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="测试环境")
     name= models.CharField(max_length=100, verbose_name="环境名称")
     hostname=models.CharField(max_length=100, verbose_name="主机名",help_text="IP地址或域名")
     port=models.IntegerField(default=22, verbose_name="端口")
